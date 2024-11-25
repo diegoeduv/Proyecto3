@@ -7,6 +7,24 @@ def test_generar_fragmentos():
     """
     Verifica que la función `generar_fragmentos` cree correctamente los fragmentos 
     y devuelva el secreto en su forma esperada.
+
+    Parámetros:
+        No recibe parámetros directamente.
+
+    Resultados:
+        La función `generar_fragmentos` debe generar un secreto de 32 bytes y
+        devolver exactamente `n` fragmentos, donde cada fragmento es una tupla
+        con dos enteros.
+
+    Precondiciones:
+        La contraseña debe ser una cadena de texto válida, y los valores de `n` y `t`
+        deben ser enteros positivos.
+
+    Postcondiciones:
+        Se aseguran las siguientes condiciones:
+        1. El secreto generado tiene una longitud de 32 bytes.
+        2. Se generan exactamente `n` fragmentos.
+        3. Cada fragmento es una tupla con dos valores enteros.
     """
     contraseña = "mi_contraseña_segura"
     n = 5 
@@ -22,6 +40,19 @@ def test_reconstruir_secreto():
     """
     Prueba que la función `reconstruir_secreto` reconstruya correctamente el secreto
     con fragmentos suficientes.
+
+    Parámetros:
+        No recibe parámetros directamente.
+
+    Resultados:
+        La función `reconstruir_secreto` debe devolver el mismo secreto original
+        cuando se le pasan suficientes fragmentos.
+
+    Precondiciones:
+        Se deben generar al menos `t` fragmentos para poder reconstruir el secreto.
+
+    Postcondiciones:
+        El secreto reconstruido debe ser idéntico al secreto original generado con los fragmentos.
     """
     contraseña_prueba = "mi_contraseña_segura"
     n = 5  
@@ -35,6 +66,22 @@ def test_reconstruir_secreto():
 def test_reconstruir_secreto_con_pocos_fragmentos():
     """
     Verifica que se lance un error si se intenta reconstruir el secreto con menos de t fragmentos.
+
+    Parámetros:
+        No recibe parámetros directamente.
+
+    Resultados:
+        La función `reconstruir_secreto` debe lanzar una excepción `ValueError` si se
+        intenta reconstruir el secreto con menos de `t` fragmentos.
+
+    Precondiciones:
+        La cantidad de fragmentos disponibles debe ser inferior a `t`.
+
+    Postcondiciones:
+        Se lanza una excepción `ValueError` al intentar reconstruir el secreto con menos de `t` fragmentos.
+
+    Excepciones:
+        Lanza una excepción `ValueError` si se usan menos de `t` fragmentos.
     """
     contraseña = "mi_contraseña_segura"
     n = 5 
@@ -47,6 +94,19 @@ def test_reconstruir_secreto_con_pocos_fragmentos():
 def test_reconstruir_secreto_con_todos_los_fragmentos():
     """
     Verifica que se pueda reconstruir el secreto correctamente usando todos los fragmentos disponibles.
+
+    Parámetros:
+        No recibe parámetros directamente.
+
+    Resultados:
+        La función `reconstruir_secreto` debe devolver el secreto original cuando se le
+        pasan todos los fragmentos generados.
+
+    Precondiciones:
+        Se deben generar suficientes fragmentos para reconstruir el secreto.
+
+    Postcondiciones:
+        El secreto reconstruido debe ser idéntico al secreto original.
     """
     contraseña = "mi_contraseña_segura"
     n = 5  
@@ -58,6 +118,19 @@ def test_reconstruir_secreto_con_todos_los_fragmentos():
 def test_hash_secreto():
     """
     Prueba que el hash del secreto generado a partir de la contraseña sea único.
+
+    Parámetros:
+        No recibe parámetros directamente.
+
+    Resultados:
+        La función `generar_fragmentos` debe generar secretos distintos para contraseñas diferentes.
+
+    Precondiciones:
+        Deben generarse fragmentos para dos contraseñas diferentes.
+
+    Postcondiciones:
+        El secreto generado a partir de la primera contraseña debe ser distinto del secreto generado
+        con la segunda contraseña.
     """
     contraseña_prueba_1 = "contraseña1"
     contraseña_prueba_2 = "contraseña2"
