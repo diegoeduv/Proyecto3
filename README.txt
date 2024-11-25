@@ -6,9 +6,26 @@ Tener instalado:
 2 Pycryptodomex
 3 Python
 4 Pytest
+5 Pip
 
 #Instalación:
-Para instalar JAVA, en la terminal escribe el siguiente comando: sudo apt install openjdk-11-jdk
+1. Instalación de Python:
+Ubuntu:
+sudo apt update
+sudo apt install python3
+Fedora:
+sudo dnf install python3
+2. Instalación de pip:
+Ubuntu:
+sudo apt install python3-pip
+Fedora:
+sudo dnf install python3-pip
+3. Instalación de Sympy:
+pip install sympy
+4. Instalación de Pycryptodomex:
+pip install pycryptodomex
+5. Instalación de Pytest:
+pip install pytest
 
 #Uso: Para ejecutar el código sigue los siguientes pasos:
 1.- Dirígete a la carpeta Codigo fuente con cd Codigo\ fuente/
