@@ -54,7 +54,6 @@ def reconstruir_secreto(fragmentos):
    
     secreto = Poly(polinomio_secreto).eval(0)
 
-    
     secreto = secreto & ((1 << 256) - 1)
 
     secreto = int(secreto)  
