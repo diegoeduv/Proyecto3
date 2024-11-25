@@ -41,6 +41,26 @@ def test_encriptar_archivo(archivo_temporal, clave_aes):
     """
     archivo_cifrado = encriptar_archivo(archivo_temporal, clave_aes)
 
-    # Verificar que el archivo cifrado se haya creado
     assert os.path.exists(archivo_cifrado), "El archivo cifrado no se generó."
     assert os.path.getsize(archivo_cifrado) > 16, "El archivo cifrado tiene un tamaño inesperado (demasiado pequeño)."
+
+def test_desencriptar_archivo(archivo_temporal, clave_aes):
+    """
+    Verifica que `desencriptar_archivo` recupere el contenido original correctamente.
+    """
+    archivo_cifrado = encriptar_archivo(archivo_temporal, clave_aes)
+    archivo_descifrado = desencriptar_archivo(archivo_cifrado, clave_aes)
+
+    # Verificar que el archivo descifrado tenga el mismo contenido que el original
+    with open(archivo_temporal, "rb") as original, open(archivo_descifrado, "rb") as descifrado:
+        assert original.read() == descifrado.read(), "El contenido descifrado no coincide con el original."
+
+def test_desencriptar_archivo_con_clave_incorrecta(archivo_temporal, clave_aes):
+    """
+    Verifica que `desencriptar_archivo` falle si se usa una clave incorrecta.
+    """
+    archivo_cifrado = encriptar_archivo(archivo_temporal, clave_aes)
+    clave_incorrecta = get_random_bytes(16)
+
+    with pytest.raises(ValueError, match="Padding is incorrect."):
+        desencriptar_archivo(archivo_cifrado, clave_incorrecta)
