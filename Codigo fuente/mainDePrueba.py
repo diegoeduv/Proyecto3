@@ -39,3 +39,5 @@ def main():
         os.remove(archivo_entrada)
         print(f"Archivo original eliminado: {archivo_entrada}")
 
+if __name__ == "__main__":
+    main()
