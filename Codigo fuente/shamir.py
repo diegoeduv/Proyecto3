@@ -19,4 +19,20 @@ def generar_fragmentos(contraseña: str, n: int, t: int):
     
     return secreto.to_bytes(32, 'big'), fragmentos
 
+def reconstruir_secreto(fragmentos):
+    if len(fragmentos) < 2:
+        raise ValueError("Se necesitan al menos 2 fragmentos para reconstruir el secreto.")
 
+    valores_x, valores_y = zip(*fragmentos)
+    
+    x = symbols('x')
+
+    polinomio_secreto = interpolate(list(zip(valores_x, valores_y)), x)
+   
+    secreto = Poly(polinomio_secreto).eval(0)
+
+    
+    secreto = secreto & ((1 << 256) - 1)
+
+    secreto = int(secreto)  
+    return secreto.to_bytes(32, 'big')
