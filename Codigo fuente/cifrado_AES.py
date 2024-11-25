@@ -18,4 +18,17 @@ def encriptar_archivo(entrada_archivo, clave):
     return salida_archivo
 
 def desencriptar_archivo(entrada_archivo, clave):
-    pass
+    with open(entrada_archivo, 'rb') as f:
+        iv = f.read(16)
+        texto_cifrado = f.read()
+
+    cifrado = AES.new(clave, AES.MODE_CBC, iv)
+    texto = unpad(cifrado.decrypt(texto_cifrado), AES.block_size)
+
+    # Recuperar el nombre del archivo original
+    salida_archivo = os.path.splitext(entrada_archivo)[0] + ".txt"
+
+    with open(salida_archivo, 'wb') as f:
+        f.write(texto)
+
+    return salida_archivo
