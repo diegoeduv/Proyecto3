@@ -10,7 +10,16 @@ def interpolacion_lagrange(valores_x, valores_y):
         clave = clave + L * valores_y[i]
     return clave
 
-def descifrar_AES(archivoEvaluaciones, archivoAES):
+def descifrar_AES(archivoAES, clave):
+    # Desciframos el archivo con AES
+    cipher = AES.new(clave, AES.MODE_EAX)
+    with open(archivoAES, "rb") as file:
+        archivo_descifrado = cipher.decrypt(file.read())
+    with open(archivoAES, "wb") as file:
+        file.write(archivo_descifrado)
+    
+
+def descifrar(archivoAES, archivoEvaluaciones):
     # Extraemos las evaluaciones del archivo
     with open(archivoEvaluaciones, "r") as file:
         evaluaciones = file.readlines()
@@ -21,6 +30,6 @@ def descifrar_AES(archivoEvaluaciones, archivoAES):
         valores_x.append(evaluacion[0])
         valores_y.append(evaluacion[1])
     # Generamos la clave a partir de las evaluaciones
-    interpolacion_lagrange(valores_x, valores_y)
+    clave = interpolacion_lagrange(valores_x, valores_y)
     # Desciframos el archivo con AES
-    pass
+    descifrar_AES(archivoAES, clave)

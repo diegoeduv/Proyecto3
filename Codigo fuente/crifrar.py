@@ -1,4 +1,5 @@
 import hashlib
+from Crypto.Cipher import AES
 from random import randint
 
 def generar_polinomio(minimos):
@@ -15,7 +16,11 @@ def evaluacion_polinomio(polinomio, clave, x):
 
 def cifrar_AES(archivo, clave):
     # Ciframos el archivo con AES
-    pass
+    cipher = AES.new(clave, AES.MODE_EAX)
+    with open(archivo, "rb") as file:
+        archivo_cifrado = cipher.encrypt(file.read())
+    with open(archivo, "wb") as file:
+        file.write(archivo_cifrado)
 
 def cifrar(archivo_evaluaciones, evaluaciones, minimos, archivo, contraseña):
     # A partir de la contraseña, obtenemos su código hash con SHA-256
@@ -31,10 +36,8 @@ def cifrar(archivo_evaluaciones, evaluaciones, minimos, archivo, contraseña):
         for evaluacion in evaluaciones:
             file.write(str(evaluacion) + "\n")
     # ciframos el archivo con AES
-    archivo_cifrado = cifrar_AES(archivo, hash)
-    #generamos el archivo cirado con AES
-    with open(archivo_cifrado, "wb") as file:
-        file.write(archivo_cifrado)
+    cifrar_AES(archivo, hash)
+    
 
 def interpolacion_lagrange(valores_x, valores_y):
     # Obtenemos el polinomio de Lagrange
@@ -48,7 +51,16 @@ def interpolacion_lagrange(valores_x, valores_y):
         clave = clave + L * valores_y[i]
     return clave
 
-def descifrar_AES(archivoEvaluaciones, archivoAES):
+def descifrar_AES(archivoAES, clave):
+    # Desciframos el archivo con AES
+    cipher = AES.new(clave, AES.MODE_EAX)
+    with open(archivoAES, "rb") as file:
+        archivo_descifrado = cipher.decrypt(file.read())
+    with open(archivoAES, "wb") as file:
+        file.write(archivo_descifrado)
+    
+
+def descifrar(archivoAES, archivoEvaluaciones):
     # Extraemos las evaluaciones del archivo
     with open(archivoEvaluaciones, "r") as file:
         evaluaciones = file.readlines()
@@ -59,6 +71,6 @@ def descifrar_AES(archivoEvaluaciones, archivoAES):
         valores_x.append(evaluacion[0])
         valores_y.append(evaluacion[1])
     # Generamos la clave a partir de las evaluaciones
-    interpolacion_lagrange(valores_x, valores_y)
+    clave = interpolacion_lagrange(valores_x, valores_y)
     # Desciframos el archivo con AES
-    pass
+    descifrar_AES(archivoEvaluaciones, archivoAES)
