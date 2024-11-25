@@ -29,3 +29,17 @@ def test_escribir_y_leer_fragmentos():
         fragmentos_leidos = leer_fragmentos(archivo_salida)
 
     assert fragmentos == fragmentos_leidos, "Los fragmentos leídos no coinciden con los escritos."
+
+def test_leer_fragmentos_archivo_invalido():
+    """
+    Prueba que leer_fragmentos lance un error al intentar leer un archivo con formato incorrecto.
+    """
+    contenido_invalido = "1,42\n2\n3,126"  # Línea 2 tiene formato incorrecto
+
+    with tempfile.NamedTemporaryFile(mode='w+', delete=False) as temp_file:
+        temp_file.write(contenido_invalido)
+        temp_file.seek(0)
+        archivo_invalido = temp_file.name
+
+    with pytest.raises(ValueError):
+        leer_fragmentos(archivo_invalido)
