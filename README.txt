@@ -29,9 +29,10 @@ pip install pytest
 
 #Uso: Para ejecutar el código sigue los siguientes pasos:
 1.- Dirígete a la carpeta Codigo fuente con cd Codigo\ fuente/
-2.-Compila el programa principal con: javac Ejecutable.java
-3.-Ejecuta el programa con: java Ejecutable
-4. Al ejecutarse, el programa te pedirá que ingreses el nombre del archivo seguido de la bandera. Para la entrada se tiene que escribir: 11838.jpg s, con esto el programa calculará el índice de cobertura nubosa y además generará una imagen una imagen en blanco y negro llamada: imagen-seg.png y se guardara en la carpeta Imagenes. Si en la entrada únicamente se coloca: 11838.jpg, el programa solo calculará el índice de cobertura nubosa.
+2.-Si se quiere cifrar el archivo, ejecuta el programa de la siguiente manera: Python3 main.py c <nombreDelArchivoDeEvaluaciones.frg> <numeroDeClavesAGenerar> <numeroDeClavesMinimasParaDescifrar> <nombreDelArchivoACifrar.txt>
+Ejemplo: python3 main.py c evaluaciones.frg 5 3 documento_claro.txt
+3.Si se quiere descifrar el archivoejecuta el programa de la siguientemanera: Python3 main.py d <nombreDelArchivoDeEvaluaciones.frg> <nombreDelArchivoCifrado.aes>
+Ejemplo:python3 main.py d evaluaciones.frg documento_claro.aes
 
 
 #Tests: Para ejecutar las pruebas sigue los siguientes pasos:
