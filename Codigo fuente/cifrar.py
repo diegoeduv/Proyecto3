@@ -25,7 +25,9 @@ def cifrar_AES(archivo, clave):
 def cifrar(archivo_evaluaciones, evaluaciones, minimos, archivo, contraseña):
     # A partir de la contraseña, obtenemos su código hash con SHA-256
     hash = hashlib.sha256(contraseña.encode()).digest()
+    hash_num = int.from_bytes(hash, byteorder='big')
     # Obtenemos n numeros aleatorios para evaluar el polinomio
+    evaluaciones = []
     numeros = [randint(1, 100) for j in range(evaluaciones)]
     polinomio = generar_polinomio(minimos)
     # Obtenemos las n evaluaciones del polinomio
@@ -73,4 +75,4 @@ def descifrar(archivoAES, archivoEvaluaciones):
     # Generamos la clave a partir de las evaluaciones
     clave = interpolacion_lagrange(valores_x, valores_y)
     # Desciframos el archivo con AES
-    descifrar_AES(archivoEvaluaciones, archivoAES)
+    descifrar_AES(archivoAES, clave)
