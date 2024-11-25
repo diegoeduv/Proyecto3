@@ -34,7 +34,7 @@ def test_leer_fragmentos_archivo_invalido():
     """
     Prueba que leer_fragmentos lance un error al intentar leer un archivo con formato incorrecto.
     """
-    contenido_invalido = "1,42\n2\n3,126"  # Línea 2 tiene formato incorrecto
+    contenido_invalido = "1,42\n2\n3,126" 
 
     with tempfile.NamedTemporaryFile(mode='w+', delete=False) as temp_file:
         temp_file.write(contenido_invalido)
@@ -43,3 +43,22 @@ def test_leer_fragmentos_archivo_invalido():
 
     with pytest.raises(ValueError):
         leer_fragmentos(archivo_invalido)
+
+def test_validar_argumentos_validos():
+    """
+    Prueba que validar_argumentos no lance una excepción para valores válidos.
+    """
+    try:
+        validar_argumentos(5, 3)
+    except ValueError:
+        pytest.fail("validar_argumentos lanzó una excepción con valores válidos.")
+
+def test_validar_argumentos_invalidos():
+    """
+    Prueba que validar_argumentos lance ValueError para valores inválidos.
+    """
+    with pytest.raises(ValueError):
+        validar_argumentos(3, 5)  
+
+    with pytest.raises(ValueError):
+        validar_argumentos(2, 2) 
