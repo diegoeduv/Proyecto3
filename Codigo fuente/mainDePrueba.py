@@ -38,6 +38,28 @@ def main():
         # Eliminar el archivo claro
         os.remove(archivo_entrada)
         print(f"Archivo original eliminado: {archivo_entrada}")
+    
+    elif modo == "d": 
+        if len(sys.argv) != 4:
+            print("Uso: main.py d <documento.frg> <archivo_cifrado>")
+            sys.exit(1)
+        
+        input_shares = sys.argv[2]
+        encrypted_file = sys.argv[3]
+
+        shares = read_shares(input_shares)
+        for share in shares:
+            print("Fragmento leído: {share}")
+
+        key = reconstruct_secret(share)
+        print(f"Clave reconstruida: {key.hex()}")
+
+        output_file = decrypt_file(encrypted_file, key)
+        print (f"Archivo descifrado generado: {output_file}")
+
+    else: 
+        print("Modo desconocido. Use 'c' para cifrar o 'd' para descifrar.")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
