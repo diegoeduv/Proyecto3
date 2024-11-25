@@ -64,3 +64,26 @@ def test_desencriptar_archivo_con_clave_incorrecta(archivo_temporal, clave_aes):
 
     with pytest.raises(ValueError, match="Padding is incorrect."):
         desencriptar_archivo(archivo_cifrado, clave_incorrecta)
+
+def test_encriptar_archivo_con_clave_invalida(archivo_temporal):
+    """
+    Verifica que `encriptar_archivo` falle si la clave no es de un tamaño válido.
+    """
+    clave_invalida = b"clave_corta"  # Clave menor a 16 bytes
+
+    with pytest.raises(ValueError):
+        encriptar_archivo(archivo_temporal, clave_invalida)
+
+def test_desencriptar_archivo_con_formato_invalido(archivo_temporal, clave_aes):
+    """
+    Verifica que `desencriptar_archivo` falle si el archivo cifrado no tiene el formato esperado.
+    """
+    archivo_cifrado = "archivo_invalido.aes"
+
+    with open(archivo_cifrado, "wb") as f:
+        f.write(b"contenido_invalido")
+
+    with pytest.raises(ValueError):
+        desencriptar_archivo(archivo_cifrado, clave_aes)
+
+    os.remove(archivo_cifrado)
