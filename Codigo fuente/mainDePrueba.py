@@ -1,8 +1,8 @@
 import sys
 import os
-from cifrado_AES import encriptar_archivo
-from shamir import generar_fragmentos
-from auxiliares import escribir_fragmentos, obtener_contraseña, validar_argumentos
+from cifrado_AES import encriptar_archivo, desencriptar_archivo
+from shamir import generar_fragmentos, reconstruir_secreto
+from auxiliares import escribir_fragmentos, obtener_contraseña, validar_argumentos, leer_fragmentos
 
 def main():
     """
@@ -53,10 +53,7 @@ def main():
 
         contraseña = obtener_contraseña()
         clave, fragmentos = generar_fragmentos(contraseña, n, t)
-        print(f"Clave generada: {clave.hex()}") 
-        for frag in fragmentos:
-            print(f"Fragmento: {frag}") 
-
+        
         archivo_encriptado = encriptar_archivo(archivo_entrada, clave)
 
         escribir_fragmentos(archivo_salida, fragmentos)
@@ -70,19 +67,15 @@ def main():
         if len(sys.argv) != 4:
             print("Uso: main.py d <documento.frg> <archivo_cifrado>")
             sys.exit(1)
-        
-        input_shares = sys.argv[2]
-        encrypted_file = sys.argv[3]
+        archivo_fragmentos = sys.argv[2]
+        archivo_cifrado = sys.argv[3]
 
-        shares = read_shares(input_shares)
-        for share in shares:
-            print("Fragmento leído: {share}")
+        fragmentos = leer_fragmentos(archivo_fragmentos)
 
-        key = reconstruct_secret(share)
-        print(f"Clave reconstruida: {key.hex()}")
+        clave_reconstruida = reconstruir_secreto(fragmentos)
 
-        output_file = decrypt_file(encrypted_file, key)
-        print (f"Archivo descifrado generado: {output_file}")
+        archivo_descifrado = desencriptar_archivo(archivo_cifrado, clave_reconstruida)
+        print(f"Archivo descifrado generado: {archivo_descifrado}")
 
     else: 
         print("Modo desconocido. Use 'c' para cifrar o 'd' para descifrar.")
