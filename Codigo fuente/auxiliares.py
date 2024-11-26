@@ -101,5 +101,5 @@ def validar_argumentos(n, t):
     **Funcionamiento:**  
       - Comprueba las condiciones `1 < t <= n` y `n > 2`. Si no se cumplen, lanza un error.
     """
-    if t > n or n <= 2:
+    if t > n or n <= 2 or t <= 1:
         raise ValueError("Debe cumplir: 1 < t <= n y n > 2.")
