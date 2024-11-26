@@ -1,5 +1,6 @@
 import hashlib
 import getpass
+import os
 
 def obtener_contraseña():
     """
@@ -24,7 +25,7 @@ def obtener_contraseña():
     contraseña = getpass.getpass("Ingrese su contraseña: ")
     return hashlib.sha256(contraseña.encode()).hexdigest()
 
-def escribir_fragmentos(archivo_salida, fragmentos):
+def escribir_fragmentos(archivo_salida, fragmentos, ruta_carpeta):
     """
     Escribe fragmentos de datos en un archivo de salida en formato CSV.
 
@@ -45,11 +46,12 @@ def escribir_fragmentos(archivo_salida, fragmentos):
     **Funcionamiento:**  
       - Itera sobre la lista de fragmentos y los escribe en el archivo en formato `x,y`.
     """
-    with open(archivo_salida, 'w') as f:
+    ruta_fragmentos = os.path.join(ruta_carpeta, archivo_salida)
+    with open(ruta_fragmentos, 'w') as f:
         for x, y in fragmentos:
             f.write(f"{x},{y}\n")
 
-def leer_fragmentos(archivo_entrada):
+def leer_fragmentos(archivo_entrada, ruta_carpeta):
     """
     Lee fragmentos de datos desde un archivo en formato CSV y los retorna como una lista de tuplas.
 
@@ -69,7 +71,8 @@ def leer_fragmentos(archivo_entrada):
       - Abre el archivo, lee cada línea, divide los valores por la coma y los convierte en enteros antes de almacenarlos como tuplas.
     """
     fragmentos = []
-    with open(archivo_entrada, 'r') as f:
+    ruta_fragmentos = os.path.join(ruta_carpeta, archivo_entrada)
+    with open(ruta_fragmentos, 'r') as f:
         for line in f:
             x, y = map(int, line.strip().split(','))
             fragmentos.append((x, y))

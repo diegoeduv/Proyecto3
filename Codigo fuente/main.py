@@ -38,7 +38,8 @@ def main():
         sys.exit(1)
 
     modo = sys.argv[1]
-
+    directorio = os.path.dirname(__file__)
+    ruta_carpeta = os.path.abspath(os.path.join(directorio, "..", "Archivos"))
     if modo == "c": 
         if len(sys.argv) != 6:
             print("Uso: main.py c <documento.frg> <n> <t> <archivo_claro>")
@@ -54,13 +55,14 @@ def main():
         contraseña = obtener_contraseña()
         clave, fragmentos = generar_fragmentos(contraseña, n, t)
         
-        archivo_encriptado = encriptar_archivo(archivo_entrada, clave)
+        archivo_encriptado = encriptar_archivo(archivo_entrada, clave, ruta_carpeta)
 
-        escribir_fragmentos(archivo_salida, fragmentos)
+        escribir_fragmentos(archivo_salida, fragmentos, ruta_carpeta)
         print(f"Archivo cifrado generado: {archivo_encriptado}")
         print(f"Archivo de evaluaciones generado: {archivo_salida}")
 
-        os.remove(archivo_entrada)
+        ruta_completa = os.path.join(ruta_carpeta, archivo_entrada)
+        os.remove(ruta_completa)
         print(f"Archivo original eliminado: {archivo_entrada}")
     
     elif modo == "d": 
@@ -70,11 +72,11 @@ def main():
         archivo_fragmentos = sys.argv[2]
         archivo_cifrado = sys.argv[3]
 
-        fragmentos = leer_fragmentos(archivo_fragmentos)
+        fragmentos = leer_fragmentos(archivo_fragmentos, ruta_carpeta)
 
         clave_reconstruida = reconstruir_secreto(fragmentos)
 
-        archivo_descifrado = desencriptar_archivo(archivo_cifrado, clave_reconstruida)
+        archivo_descifrado = desencriptar_archivo(archivo_cifrado, clave_reconstruida, ruta_carpeta)
         print(f"Archivo descifrado generado: {archivo_descifrado}")
 
     else: 

@@ -2,7 +2,7 @@ from Cryptodome.Cipher import AES
 from Cryptodome.Util.Padding import pad, unpad
 import os
 
-def encriptar_archivo(entrada_archivo, clave):
+def encriptar_archivo(entrada_archivo, clave, ruta_carpeta):
     """
     Cifra un archivo utilizando el algoritmo AES en modo CBC.
 
@@ -27,19 +27,22 @@ def encriptar_archivo(entrada_archivo, clave):
     """
     cifrado = AES.new(clave, AES.MODE_CBC)
     iv = cifrado.iv
+    
+    ruta_entrada = os.path.join(ruta_carpeta, entrada_archivo)
 
-    with open(entrada_archivo, 'rb') as f:
+    with open(ruta_entrada, 'rb') as f:
         texto = f.read()
 
     texto_cifrado = cifrado.encrypt(pad(texto, AES.block_size))
     salida_archivo = os.path.splitext(entrada_archivo)[0] + '.aes'
 
-    with open(salida_archivo, 'wb') as f:
+    ruta_salida = os.path.join(ruta_carpeta, salida_archivo)
+    with open(ruta_salida, 'wb') as f:
         f.write(iv + texto_cifrado)
 
     return salida_archivo
 
-def desencriptar_archivo(entrada_archivo, clave):
+def desencriptar_archivo(entrada_archivo, clave, ruta_carpeta):
     """
     Descifra un archivo previamente cifrado utilizando el algoritmo AES en modo CBC.
 
@@ -63,7 +66,8 @@ def desencriptar_archivo(entrada_archivo, clave):
       - Elimina el relleno (padding) del contenido descifrado.
       - Escribe el contenido descifrado en un nuevo archivo.
     """
-    with open(entrada_archivo, 'rb') as f:
+    ruta_entrada = os.path.join(ruta_carpeta, entrada_archivo)
+    with open(ruta_entrada, 'rb') as f:
         iv = f.read(16)
         texto_cifrado = f.read()
 
@@ -72,7 +76,8 @@ def desencriptar_archivo(entrada_archivo, clave):
 
     salida_archivo = os.path.splitext(entrada_archivo)[0] + ".txt"
 
-    with open(salida_archivo, 'wb') as f:
+    ruta_salida = os.path.join(ruta_carpeta, salida_archivo)
+    with open(ruta_salida, 'wb') as f:
         f.write(texto)
 
     return salida_archivo
