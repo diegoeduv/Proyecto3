@@ -29,11 +29,12 @@ pip install pytest
 
 #Uso: Para ejecutar el código sigue los siguientes pasos:
 1.- Dirígete a la carpeta Codigo fuente con cd Codigo\ fuente/
-2.-Si se quiere cifrar el archivo, ejecuta el programa de la siguiente manera: Python3 main.py c <nombreDelArchivoDeEvaluaciones.frg> <numeroDeClavesAGenerar> <numeroDeClavesMinimasParaDescifrar> <nombreDelArchivoACifrar.txt>
+2.-Se tiene un archivo de texto por defecto en la carpeta Archivos. Debes mover a esa carpeta todos los archivos que desees manejar. Si se quiere cifrar el archivo, ejecuta el programa de la siguiente manera: Python3 main.py c <nombreDelArchivoDeEvaluaciones.frg> <numeroDeClavesAGenerar> <numeroDeClavesMinimasParaDescifrar> <nombreDelArchivoACifrar.txt>
 Ejemplo: python3 main.py c evaluaciones.frg 5 3 documento_claro.txt
+Esto eliminará el archivo documento_claro.txt en la carpeta Archivos, y creará dentro de la misma el archivo ya cifrado, documento_claro.aes; así como el archivo que contiene las evaluaciones, evaluaciones.frg.
 3.Si se quiere descifrar el archivoejecuta el programa de la siguientemanera: Python3 main.py d <nombreDelArchivoDeEvaluaciones.frg> <nombreDelArchivoCifrado.aes>
 Ejemplo:python3 main.py d evaluaciones.frg documento_claro.aes
-
+Esto recuperará el contenido original del archivo documento_claro.txt dentro de la carpeta Archivos.
 
 #Tests: Para ejecutar las pruebas sigue los siguientes pasos:
 1.- Dirígete a la carpeta Codigo fuente con cd Codigo\ fuente/
