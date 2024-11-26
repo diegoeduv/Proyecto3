@@ -7,8 +7,9 @@ def encriptar_archivo(entrada_archivo, clave, ruta_carpeta):
     Cifra un archivo utilizando el algoritmo AES en modo CBC.
 
     **Parámetros:**
-      - `entrada_archivo` (str): Ruta al archivo de entrada que será cifrado.
+      - `entrada_archivo` (str): Nombre del archivo de entrada que será cifrado.
       - `clave` (bytes): Clave de 16, 24 o 32 bytes utilizada para el cifrado.
+      - `ruta_carpeta` (str): Ruta de la carpeta del archivo de entrada
 
     **Resultados:**
       - Retorna la ruta del archivo cifrado generado, con extensión `.aes`.
@@ -47,8 +48,9 @@ def desencriptar_archivo(entrada_archivo, clave, ruta_carpeta):
     Descifra un archivo previamente cifrado utilizando el algoritmo AES en modo CBC.
 
     **Parámetros:**
-      - `entrada_archivo` (str): Ruta al archivo cifrado con extensión `.aes`.
+      - `entrada_archivo` (str): Nombre del archivo cifrado con extensión `.aes`.
       - `clave` (bytes): Clave de 16, 24 o 32 bytes utilizada para el descifrado.
+      - `ruta_carpeta` (str): Ruta de la carpeta del archivo cifrado.
 
     **Resultados:**
       - Retorna la ruta del archivo descifrado generado, con extensión `.txt`.

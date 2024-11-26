@@ -30,8 +30,9 @@ def escribir_fragmentos(archivo_salida, fragmentos, ruta_carpeta):
     Escribe fragmentos de datos en un archivo de salida en formato CSV.
 
     **Parámetros:**  
-      - `archivo_salida` (str): Ruta del archivo donde se guardarán los fragmentos.
+      - `archivo_salida` (str): Nombre del archivo donde se guardarán los fragmentos.
       - `fragmentos` (list of tuples): Lista de tuplas con los fragmentos a escribir. Cada tupla debe contener dos valores enteros (x, y).
+      - `ruta_carpeta` (str): Ruta de la carpeta donde se guardará el archivo.
 
     **Resultados:**  
       - No retorna nada. Los fragmentos se escriben en el archivo especificado.
@@ -56,7 +57,8 @@ def leer_fragmentos(archivo_entrada, ruta_carpeta):
     Lee fragmentos de datos desde un archivo en formato CSV y los retorna como una lista de tuplas.
 
     **Parámetros:**  
-      - `archivo_entrada` (str): Ruta del archivo que contiene los fragmentos en formato `x,y`.
+      - `archivo_entrada` (str): Nombre del archivo que contiene los fragmentos en formato `x,y`.
+      - `ruta_carpeta` (str): Ruta de la carpeta donde se encuentra el archivo.
 
     **Resultados:**  
       - Devuelve una lista de tuplas `(x, y)` con los valores enteros de cada fragmento.
